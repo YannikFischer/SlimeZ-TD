@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SlimeZ TD Code</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar_container">
+        <a href="/index.html" id="navbar_logo">SlimeZ TD</a>
+        <ul class="navbar_menu">
+          <li class="navbar_item">
+            <a href="/maps.html" class="navbar_links">Maps</a>
+          </li>
+          <li class="navbar_item">
+            <a href="/slimeys.html" class="navbar_links">Slimeys</a>
+          </li>
+          <li class="navbar_item">
+            <a href="/turrets.html" class="navbar_links">Turrets</a>
+          </li>
+          <li class="navbar_item">
+            <a href="/index.html" class="navbar_links">Home</a>
+          </li>
+          <li class="navbar_btn">
+            <a href="/" class="button">Download</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="code_main">
+      <div class="code_main_container">
+        <h1>HealthBar Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections; <br />
+            using System.Collections.Generic; <br />using UnityEngine;
+            <br /><br />
+            public class HealthBar : MonoBehaviour { <br />
+            <br />
+            public float maxHealth = 100; <br />public float currentHealth =
+            100;<br />
+            private float originalScale; <br /><br />// Start is called before
+            the first frame update <br />void Start() {<br />
+            originalScale = gameObject.transform.localScale.x; <br />}
+            <br /><br />// Update is called once per frame <br />void Update() {
+            <br />Vector3 tmpScale = gameObject.transform.localScale;
+            <br />tmpScale.x = currentHealth / maxHealth * originalScale;
+            <br />gameObject.transform.localScale = tmpScale; <br />} <br />}
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>Slimey Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections;<br />
+            using System.Collections.Generic;<br />
+            using UnityEngine;<br /><br />
+
+            public class Slimey : MonoBehaviour<br />
+            {<br />
+            public GameObject[] waypoints;<br />
+            private int currentWaypoint = 0;<br />
+            private float lastWaypointSwitchTime;<br />
+            public float startSpeed = 1.0f;<br />
+            [HideInInspector]<br />
+            public float speed;<br />
+            public float slowAmount = 0.5f;<br /><br />
+
+            public int killWorth = 50;<br />
+            public int LifeDamage = 1;<br /><br />
+
+            public static Slimey slimey;<br /><br />
+
+            // Start is called before the first frame update<br />
+            void Start()<br />
+            {<br />
+            speed = startSpeed;<br />
+            lastWaypointSwitchTime = Time.time; //Time = Zeit ?XD<br />
+            slimey = this;<br />
+            }<br /><br />
+
+            // Update is called once per frame<br />
+            void Update()<br />
+            {<br />
+            slimey = this;<br /><br />
+
+            //Macht dass sich der Slimey von Punkt a zu Punkt b und zu Punkt c
+            usw. bewegen kann<br />
+            Vector3 startPosition =
+            waypoints[currentWaypoint].transform.position;<br />
+            Vector3 endPosition = waypoints[currentWaypoint +
+            1].transform.position;<br /><br />
+
+            float pathLength = Vector3.Distance(startPosition, endPosition);<br />
+            float totalTimeForPath = pathLength / speed;<br />
+            float currentTimeOnPath = Time.time - lastWaypointSwitchTime;<br />
+            gameObject.transform.position = Vector2.Lerp(startPosition,
+            endPosition, currentTimeOnPath / totalTimeForPath);<br /><br />
+
+            if (gameObject.transform.position.Equals(endPosition))
+            //kontrolliert ob der Slimey schon am letzten Waypoint ist<br />
+            {<br />
+            if (currentWaypoint < waypoints.Length - 2)<br />
+            {<br />
+            currentWaypoint++;<br />
+            lastWaypointSwitchTime = Time.time;<br />
+            }<br />
+            else //zerstört den Slimey und setzt die Leben auf eines weniger<br />
+            {<br />
+            CameraShake.instance.StartShake();<br />
+            Destroy(gameObject);<br />
+            GameManager.singleton.SetHealth(GameManager.singleton.GetHealth() -
+            LifeDamage);<br />
+            }<br />
+            }<br />
+            }<br /><br />
+
+            public float DistanceToGoal()<br />
+            {<br />
+            float distance = 0;<br />
+            distance += Vector2.Distance(gameObject.transform.position,
+            waypoints[currentWaypoint + 1].transform.position);<br />
+
+            for (int i = currentWaypoint + 1; i < waypoints.Length - 1; i++)<br />
+            {<br />
+            Vector3 startPosition = waypoints[i].transform.position;<br />
+            Vector3 endPosition = waypoints[i + 1].transform.position;<br />
+            distance = distance + Vector2.Distance(startPosition,
+            endPosition);<br />
+            }<br /><br />
+
+            return distance;<br />
+            }<br />
+            }<br />
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>AudioManager Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections;<br />
+            using System.Collections.Generic;<br />
+            using UnityEngine;<br /><br />
+
+            public class AudioManager : MonoBehaviour<br />
+            {<br />
+            public static AudioManager instance;<br />
+            public AudioSource slimeyDestroy;<br />
+            public AudioSource inGameMusic;<br />
+            public AudioSource titleScreenMusic;<br />
+            public AudioSource gameOverMusic;<br /><br />
+
+            void Awake()<br />
+            {<br />
+            instance = this;<br />
+            }<br /><br />
+
+            // Start is called before the first frame update<br />
+            void Start()<br />
+            {<br />
+            instance = this;<br />
+            }<br />
+            }<br />
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>CameraShake Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections;<br />
+            using System.Collections.Generic;<br />
+            using UnityEngine;<br /><br />
+
+            public class CameraShake : MonoBehaviour<br />
+            {<br />
+            public Transform camTransform; private float shakeDuration = 0f;
+            //Wie lange der Shake dauert<br />
+            public float shakeAmount = 0.7f; //Die Stärke des Shakes<br />
+            public float decreaseFactor = 1f; //Wie schnell der Shake wieder
+            aufhört<br />
+            public float shakeSaveDurationValue = 0.0f;<br />
+            public static CameraShake instance;<br /><br />
+
+            Vector3 originalPos;<br /><br />
+
+            private void Awake()<br />
+            {<br />
+            instance = this;<br />
+            if (camTransform == null)<br />
+            {<br />
+            camTransform = GetComponent(typeof(Transform)) as Transform;<br />
+            }<br />
+            }<br />
+            private void OnEnable()<br />
+            {<br />
+            originalPos = camTransform.localPosition;<br />
+            }<br /><br />
+
+            public void StartShake()<br />
+            {<br />
+            shakeDuration = shakeSaveDurationValue;<br />
+            originalPos = camTransform.localPosition;<br />
+            }<br /><br />
+
+            // Update is called once per frame<br />
+            void Update()<br />
+            {<br />
+            if (shakeDuration > 0)<br />
+            {<br />
+            camTransform.localPosition = originalPos + Random.insideUnitSphere *
+            shakeAmount;<br />
+            shakeDuration -= Time.deltaTime * decreaseFactor;<br />
+            }<br />
+            else<br />
+            {<br />
+            shakeDuration = 0;<br />
+            camTransform.localPosition = originalPos;<br />
+            }<br />
+            }<br />
+            }<br />
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>TankData Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections;<br />
+using System.Collections.Generic;<br />
+using UnityEngine;<br /><br />
+
+[System.Serializable]<br />
+public class TankLevel<br />
+{<br />
+    public int cost;<br />
+    public GameObject display;<br />
+    public GameObject displaySkin;<br />
+    public GameObject bullet;<br />
+    public float fireRate;<br />
+}<br /><br />
+
+public class TankData : MonoBehaviour<br />
+{<br />
+    public List<TankLevel> level;<br />
+    public TankLevel currentLevel;<br /><br />
+
+    private void OnEnable()<br />
+    {<br />
+        currentLevel = level[0];<br />
+        SetTankLevel(currentLevel);<br />
+    }<br /><br />
+
+    public TankLevel GetTankLevel()<br />
+    {<br />
+        return currentLevel;<br />
+    } <br /><br />
+
+    public void SetTankLevel(TankLevel tankLevel)<br />
+    {<br />
+        currentLevel = tankLevel;<br /><br />
+
+        int currentLevelIndex = level.IndexOf(currentLevel);<br /><br />
+
+        //Das Level dass wir wissen wollen, nehmen wir aus der Liste "level" heraus die wie oben erstellt haben<br />
+        GameObject levelDisplay = level[currentLevelIndex].display;<br /><br />
+
+        //diese Schleife Aktiviert bzw deaktiviert Tanks, das kontrollieren wir mit der Liste <br />
+        for (int i = 0; i < level.Count; i++)<br />
+        {<br />
+            if (levelDisplay != null)<br />
+            {<br />
+                if (i == currentLevelIndex)<br />
+                {<br />
+                    //Aktiviert Tanks, sodass zb. Level 3 sichtbar wird<br />
+                    level[i].display.SetActive(true);<br />
+                }<br />
+                else<br />
+                {<br />
+                    //Deaktiviert Tanks, also zb. deaktiviert 2 wenn man auf Level 3 upgraded<br />
+                    level[i].display.SetActive(false);<br />
+                }<br />
+            }<br />
+        }<br />
+
+    }<br /><br />
+
+    public void IncreaseLevel()     //erhöht Level des Tanks<br />
+    {<br />
+        int currentLevelIndex = level.IndexOf(currentLevel);<br />
+        if(currentLevelIndex < level.Count - 1)<br />
+        {<br />
+            currentLevel = level[currentLevelIndex + 1<br />];
+            SetTankLevel(currentLevel);<br />
+        }<br />
+    }<br /><br />
+
+    public TankLevel GetNextTankLevel()     //checkt ob das jetzige Level schon das Max Level ist oder ob er nochmal upgraden kann<br />
+    {<br />
+        int currentLevelIndex = level.IndexOf(currentLevel);<br />
+        int maxLevelIndex = level.Count - 1;<br /><br />
+
+        if (currentLevelIndex < maxLevelIndex)<br />
+        {<br />
+            return level[currentLevelIndex + 1];<br />
+        }<br />
+        else<br />
+        {<br />
+            return null;<br />
+        }<br />
+    }<br /><br />
+
+    public void OnSkinSelection(TankLevel _tankLevel)<br />
+    {<br />
+        _tankLevel.display = _tankLevel.displaySkin;<br />
+    }<br />
+}<br />
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>TankPlacement Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections;<br />
+using System.Collections.Generic;<br />
+using UnityEngine;<br /><br />
+
+public class TankPlacement : MonoBehaviour<br />
+{<br />
+    public GameObject tankPrefab;<br />
+    public GameObject tankPrefabSkin;<br />
+    private GameObject tank;<br /><br />
+
+    public static TankPlacement tankPlacement;<br /><br />
+
+    //OnMouseUp machts dass sobald man drückt und wieder loslässt passiert was<br />
+    private void OnMouseUp()<br />
+    {<br />
+        tankPlacement = this;<br />
+        //OnSkinSelection();<br /><br />
+
+        //checkt ob er genug coins hat um den Level 1 Tank zu placen<br />
+        if (CanPlaceTank())<br />
+        {<br />
+            //OnSkinSelection();<br />
+            //GameManager.singleton.OnSkinSelect();<br /><br />
+
+            int cost = tankPrefab.GetComponent<TankData>().level[0].cost;<br /><br />
+
+            //hat man genug Coins?<br />
+            if (GameManager.singleton.GetCoins() >= cost)<br />
+            {<br />
+                tank = Instantiate(tankPrefab, transform.position, Quaternion.identity);<br /><br />
+
+                //setzt die Coins auf die vorherigen Coins minus die Tank Kosten.<br />
+                GameManager.singleton.SetCoins(GameManager.singleton.GetCoins() - tank.GetComponent<TankData>().currentLevel.cost);<br />
+            }     <br />
+        }<br />
+        //checkt ob er genug coins hat um den Level 1 Tank zu placen<br />
+        else if (CanUpgradeTank())<br />
+        {<br />
+            int cost = tank.GetComponent<TankData>().GetNextTankLevel().cost;<br /><br />
+
+            //hat man genug Coins?<br />
+            if (GameManager.singleton.GetCoins() >= cost)<br />
+            {<br />
+                tank.GetComponent<TankData>().IncreaseLevel();<br /><br />
+
+                //setzt die Coins auf die vorherigen Coins minus die Tank Kosten.<br />
+                GameManager.singleton.SetCoins(GameManager.singleton.GetCoins() - tank.GetComponent<TankData>().currentLevel.cost);<br />
+            }<br />
+        }<br />
+    }<br /><br />
+    
+    //checkt ob man einen Tank platzieren kann, falls es schon einen gibt kann kein zweiter erstellt werden.<br />
+    private bool CanPlaceTank() <br />
+    {<br />
+        if (tank == null)<br />
+        {<br />
+            return true;<br />
+        }<br />
+        else<br />
+        {<br />
+            return false;<br />
+        }<br />
+
+    }<br />
+
+    private bool CanUpgradeTank()       //kann er upgraden?<br />
+    {<br />
+        if (tank != null)<br />
+        {<br />
+            TankData data = tank.GetComponent<TankData>();<br />
+            TankLevel nextLevel = data.GetNextTankLevel();<br /><br />
+
+            if (nextLevel != null)<br />
+            {<br />
+                return true;<br />
+            }<br />
+        }v<br />
+
+        return false;<br />
+    }<br /><br />
+
+    
+    public void OnSkinSelection()<br />
+    {<br />
+        tankPrefab = tankPrefabSkin;<br />
+    }<br />
+    
+}<br />
+
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>Bullet Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections;<br />
+using System.Collections.Generic;<br />
+using UnityEngine;<br /><br />
+
+public class Bullet : MonoBehaviour<br />
+{<br />
+    public float speed = 10;            //Geschwindigkeit der Bullet<br />
+    public float damage;                //Schaden der Bullet<br />
+    public GameObject target;           //Ziel der Bullet<br />
+    public Vector3 startPosition;       //Startposition<br />
+    public Vector3 targetPosition;      //Zielposition<br /><br />
+
+    private float distance;<br />
+    private float startTime;<br /><br />
+
+    // Start is called before the first frame update<br />
+    void Start()<br />
+    {<br />
+        startTime = Time.time;<br />
+        distance = Vector2.Distance(startPosition, targetPosition);<br />
+    }<br /><br />
+
+    // Update is called once per frame<br />
+    void Update()<br />
+    {<br />
+        float timeInterval = Time.time - startTime;<br /><br />
+
+        gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);<br /><br />
+
+        if (gameObject.transform.position.Equals(targetPosition))<br />
+        {<br />
+            if (target != null)<br />
+            {<br />
+                Transform healthBarTransform = target.transform.Find("HealthBar");  //sucht HealthBar Script<br />
+                HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();  //^<br />
+                healthBar.currentHealth -= Mathf.Max(damage, 0);    //zieht entweder Leben ab, oder 0, Bug fix dass Gegner nicht Leben dazu bekommt<br />
+
+                if (healthBar.currentHealth <= 0)<br />
+                {<br />
+                    Destroy(target);<br /><br />
+
+                    GameManager.singleton.SetCoins(GameManager.singleton.GetCoins() + Slimey.slimey.killWorth);<br />
+                    AudioManager.instance.slimeyDestroy.Play();     <br />
+                }<br />
+            }<br /><br />
+
+            Destroy(gameObject);<br />
+        }<br />
+    }<br />
+}<br />
+
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>Fire Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections;<br />
+            using System.Collections.Generic;<br />
+            using UnityEngine;<br /><br />
+            
+            public class Fire : MonoBehaviour<br />
+            {<br />
+                public List<GameObject> slimeysInRange;<br /><br />
+            
+                private float lastShotTime;<br />
+                private TankData tankData;<br /><br />
+            
+                // Start is called before the first frame update<br />
+                void Start()<br />
+                {<br />
+                    slimeysInRange = new List<GameObject>();<br />
+                    lastShotTime = Time.time;<br />
+                    tankData = gameObject.GetComponentInChildren<TankData>();<br />
+                }<br /><br />
+                
+                // Update is called once per frame<br />
+                void Update()<br />
+                {<br />
+                    GameObject target = null;<br />
+                    float minimalSlimeyDistance = float.MaxValue;<br /><br />
+            
+                    foreach (GameObject slimey in slimeysInRange)<br />
+                    {<br />
+                        float distanceToGoal = slimey.GetComponent<Slimey>().DistanceToGoal();<br /><br />
+            
+                        if (distanceToGoal < minimalSlimeyDistance)<br />
+                        {<br />
+                            target = slimey;<br />
+                            minimalSlimeyDistance = distanceToGoal;<br />
+                        }<br />
+                    }<br /><br />
+            
+                    if (target != null)<br />
+                    {<br />
+                        if (Time.time - lastShotTime > tankData.currentLevel.fireRate)<br />
+                        {<br />
+                            Shoot(target.GetComponent<CircleCollider2D>());<br />
+                            lastShotTime = Time.time;               //setzen den Letzten Schuss auf die jetzige Zeit sodass er nicht direkt nochmal schießt, sondern die FireRate abwartet<br />
+                        }<br /><br />
+            
+                        //Rotiert den Tank richtung Gegner<br />
+                        Vector3 direction = gameObject.transform.position - target.transform.position;<br /><br />
+            
+                        gameObject.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(direction.y, direction.x) * 180 / Mathf.PI, new Vector3(0, 0, 1));<br />
+                    }<br />
+                }<br />
+                private void OnTriggerEnter2D(Collider2D other)     //checkt ob ein Slimey in range ist<br />
+                {<br />
+                    if (other.gameObject.tag.Equals("Slimey"))      //falls ein Slimey in range ist soll es was ausführen, falls was anderes in rnage ist wie zb eine Bullet dann solls nicht ausführen<br />
+                    {<br />
+                        slimeysInRange.Add(other.gameObject);<br />
+                    }<br />
+                }<br /><br />
+            
+                private void OnTriggerExit2D(Collider2D other)<br />
+                {<br />
+                    if (other.gameObject.tag.Equals("Slimey"))<br />
+                    {<br />
+                        slimeysInRange.Remove(other.gameObject);<br />
+                    }<br />
+                }<br /><br />
+            
+                void Shoot(Collider2D target)<br />
+                {<br />
+                    GameObject bulletPrefab = tankData.currentLevel.bullet;     //hier holen wir den Prefab aus dem Tank raus (die Bullet die wir pro Tank Level ausgewählt haben)<br /><br />
+            
+                    Vector3 startPosition = gameObject.transform.position;      //Start und Zielposition wird ermittelt<br />
+                    Vector3 targetPosition = target.transform.position;<br /><br />
+            
+                    startPosition.z = bulletPrefab.transform.position.z;        //Z Werte sollen identisch sein (bug fix)<br />
+                    targetPosition.z = bulletPrefab.transform.position.z;<br /><br />
+            
+                    GameObject newBullet = Instantiate(bulletPrefab);           //neue Bullet wird erzeugt<br />
+                    newBullet.transform.position = startPosition;               //diese Bullet wird auf die Startposition gesetzt<br /><br />
+            
+                    Bullet bulletComp = newBullet.GetComponent<Bullet>();       //Holen uns das Script "Bullet"<br /><br />
+            
+                    bulletComp.target = target.gameObject;                      //Setzen das Ziel<br />
+                    bulletComp.startPosition = startPosition;<br />
+                    bulletComp.targetPosition = targetPosition;<br />
+                }<br />
+            }<br />
+            
+
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>SpawnSlimey Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System.Collections;<br />
+using System.Collections.Generic;<br />
+using UnityEngine;<br /><br />
+
+[System.Serializable]<br />
+public class Wave<br />
+{<br />
+    public GameObject slimeyPrefab;<br />
+    public float spawnInterval;<br />
+    public int maxSlimeys;<br />
+}<br /><br />
+
+public class SpawnSlimey : MonoBehaviour<br />
+{<br />
+    public GameObject[] waypoints;<br />
+    public Wave[] waves;<br />
+    public int timeBetweenWaves = 5;<br />
+    public GameObject winMessagePanel;<br />
+    private float lastSpawnTime;<br />
+    private int slimeysSpawned = 0;<br /><br />
+
+    public GameManager gameManager;<br /><br />
+
+    // Start is called before the first frame update<br />
+    void Start()<br />
+    {<br />
+        lastSpawnTime = Time.time;<br />
+    }<br /><br />
+
+    // Update is called once per frame<br />
+    void Update()<br />
+    {<br />
+        int currentWave = GameManager.singleton.GetWave();<br /><br />
+
+        if (currentWave < waves.Length)<br />
+        {<br />
+            float timeInterval = Time.time - lastSpawnTime;<br />
+            float spawnInterval = waves[currentWave].spawnInterval;<br /><br />
+
+            //zu lange zu erklären, checkt aber ob schon alle Slimeys gespawned wurden und mehr.<br />
+            if (((slimeysSpawned == 0 && timeInterval > timeBetweenWaves) || timeInterval > spawnInterval) && slimeysSpawned < waves[currentWave].maxSlimeys)<br />
+            {<br />
+                lastSpawnTime = Time.time;<br /><br />
+
+                GameObject newSlimey = Instantiate(waves[currentWave].slimeyPrefab);<br />
+                newSlimey.GetComponent<Slimey>().waypoints = waypoints;<br />
+                slimeysSpawned++;<br />
+            }<br /><br />
+
+            //geht zur nächsten Wave über<br />
+            if (slimeysSpawned == waves[currentWave].maxSlimeys && GameObject.FindGameObjectWithTag("Slimey") == null)<br />
+            {<br />
+                GameManager.singleton.SetWave(GameManager.singleton.GetWave() + 1);<br />
+                //gibt dir nach der Wave 50% von deinen jetzigen Coins extra als Belohnung<br />
+                GameManager.singleton.SetCoins(Mathf.RoundToInt(GameManager.singleton.GetCoins() * 1.5f));<br /><br />
+
+                slimeysSpawned = 0;<br /><br />
+
+                lastSpawnTime = Time.time;<br />
+            }<br />
+        }<br />
+        else<br />
+        {<br />
+            //stoppt die Zeit sodass alles auf dem Screen freezed<br />
+            Time.timeScale = 0.0f;<br />
+            //stoppt das Spiel, gameOver heißt hier nicht verloren sondern einfach nur dass das Spiel aus ist da wir gewonnen ha<br />
+            winMessagePanel.SetActive(true);<br /><br />
+
+            gameManager.LevelWon();<br />
+        }<br />
+    }<br />
+}<br />
+
+
+          </p>
+        </div>
+      </div>
+      <div class="code_main_container">
+        <h1>GameManager Code</h1>
+        <div class="code_main_container_text">
+          <p>
+            using System;<br />
+using System.Collections;<br />
+using System.Collections.Generic;<br />
+using UnityEngine;<br />
+using UnityEngine.UI;<br />
+using UnityEngine.SceneManagement;<br /><br />
+
+[System.Serializable]<br />
+public class GameManager : MonoBehaviour<br />
+{<br />
+    public Text coinsLabel;<br />
+    public int coins = 1000;<br /><br />
+
+    public Text waveLabel;<br />
+    public bool gameOver = false;<br />
+    private int wave;<br /><br />
+
+    public Text healthLabel;<br />
+    public GameObject[] healthIndicator; <br />   
+    private int health;<br /><br />
+
+    public static GameManager singleton;<br /><br />
+
+    public GameObject gameOverPanel;<br />
+    public GameObject playPanel;<br />
+    public GameObject pausePanel;<br />
+    public GameObject resumePanel;<br />
+    public GameObject helpPanel;<br /><br />
+
+    public int gameplayHighscore;<br />
+    public int gameOverCurrentScore;<br />
+    public int highScore;<br /><br />
+
+    public Text GameOverCurrentScore;<br />
+    public Text gamePlayHighScore;<br />
+    public Text gameOverHighScore;<br />
+    public Text resumeCurrentScore;<br />
+    public Text resumeHighScore;<br />
+    public Text winCurrentScore;<br />
+    public Text winHighScore;<br /><br />
+
+    public string nextLevel = "Level03";<br />
+    public int levelToUnlock = 3;<br /><br />
+
+    private void Awake()<br />
+    {<br />
+        Time.timeScale = 0.0f;<br /><br />
+
+        if (singleton == null)<br />
+        {<br />
+            singleton = this;<br />
+        }<br />
+        else if (singleton != this)<br />
+        {<br />
+            Destroy(gameObject);<br />
+            DontDestroyOnLoad(gameObject);<br />
+        }<br />
+    }<br /><br />
+
+    // Start is called before the first frame update<br />
+    void Start()<br />
+    {<br />
+        SetWave(0);<br />
+        SetHealth(10);<br />
+        highScore = PlayerPrefs.GetInt("HIGHSCORE", 0);<br />
+        gamePlayHighScore.text = highScore.ToString();<br />
+        gameOverHighScore.text = highScore.ToString();<br />
+        resumeHighScore.text = highScore.ToString();<br /><br />
+
+        AudioManager.instance.titleScreenMusic.loop = true;<br />
+        AudioManager.instance.titleScreenMusic.Play();<br />
+        AudioManager.instance.titleScreenMusic.loop = true;<br />
+        AudioManager.instance.titleScreenMusic.Play();<br />
+    }<br /><br />
+
+    public void SetWave(int value)<br />
+    {<br />
+        wave = value;<br />
+    }<br /><br />
+
+    public void ShowWave()<br />
+    {<br />
+        waveLabel.text = "Wave: " + wave;<br />
+    }<br /><br />
+
+    public int GetHealth()<br />
+    {<br />
+        return health;<br />
+    }<br /><br />
+
+    public int GetWave()<br />
+    {<br />
+        return wave;<br />
+    }<br /><br />
+
+    public void GameOver()<br />
+    {<br />
+        gameOver = true;<br /><br />
+
+        Time.timeScale = 0.0f;                    //setzt Zeit auf 0 sodass sich nichts mehr bewegt <br />
+        pausePanel.SetActive(false);              //Der Pause Panel wird deaktiviert<br /><br />
+
+        //1 Coin ist 1 Punkt<br />
+        highScore = PlayerPrefs.GetInt("HIGHSCORE", 0);<br /><br />
+
+        if (coins > highScore)<br />
+        {<br />
+            //Wir setzen unserern jetzigen Coin Counter auf unseren Highscore falls der Highscore unter den jetzigen Coins liegt.<br />
+            highScore = coins;<br />
+            PlayerPrefs.SetInt("HIGHSCORE", highScore);<br />
+        }<br /><br />
+
+        GameOverCurrentScore.text = coins.ToString();<br />
+        gameOverHighScore.text = highScore.ToString();<br />
+        gamePlayHighScore.text = highScore.ToString();<br />
+        winCurrentScore.text = coins.ToString();<br />
+        winHighScore.text = highScore.ToString();<br /><br />
+
+        AudioManager.instance.inGameMusic.Stop();<br />
+        AudioManager.instance.titleScreenMusic.Play();<br />
+        AudioManager.instance.titleScreenMusic.loop = true;<br />
+    }<br /><br />
+
+    public void SetHealth(int value)<br />
+    {<br />
+        health = value;<br /><br />
+
+        if (health <= 0 && !gameOver)<br />
+        {<br />
+            gameOverPanel.SetActive(true);<br /><br />
+
+            GameOver();<br /><br />
+
+            AudioManager.instance.gameOverMusic.Play();<br />
+        }<br /><br />
+
+        for (int i = 0; i < healthIndicator.Length; i++)<br />
+        {<br />
+            if (i < health)<br />
+            {<br />
+                healthIndicator[i].SetActive(true);<br />
+            }<br />
+            else<br />
+            {<br />
+                healthIndicator[i].SetActive(false);<br />
+            }<br />
+        }<br />
+    }<br /><br />
+
+    public void ShowHealth()<br />
+    {<br />
+        healthLabel.text = ": " + health;<br />
+    }<br /><br />
+
+    // Update is called once per frame<br />
+    void Update()<br />
+    {<br />
+        ShowCoins();<br />
+        ShowWave();<br />
+        ShowHealth();<br />
+    }<br /><br />
+
+    public void SetCoins(int value)<br />
+    {<br />
+        coins = value;<br />
+    }<br />
+
+    public int GetCoins()<br />
+    {<br />
+        return coins;<br />
+    }<br /><br />
+
+    public void ShowCoins()<br />
+    {<br />
+        coinsLabel.text = ": " + coins;<br />
+    }<br /><br />
+
+    public void OnPlayButton()<br />
+    {<br />
+        playPanel.SetActive(false);<br />
+        Time.timeScale = 1.0f;<br /><br />
+
+        AudioManager.instance.titleScreenMusic.Stop();<br />
+        AudioManager.instance.inGameMusic.loop = true;<br />
+        AudioManager.instance.inGameMusic.Play();<br />
+    }<br /><br />
+
+    public void OnResumeButton()<br />
+    {<br />
+        pausePanel.SetActive(true);<br />
+        resumePanel.SetActive(false);<br />
+        Time.timeScale = 1.0f;<br />
+
+        AudioManager.instance.titleScreenMusic.Stop();<br />
+        AudioManager.instance.inGameMusic.loop = true;<br />
+        AudioManager.instance.inGameMusic.Play();<br />
+    }<br /><br />
+
+    public void OnPauseButton()<br />
+    {<br />
+        Time.timeScale = 0.0f;<br />
+        pausePanel.SetActive(false);<br />
+        resumePanel.SetActive(true);<br />
+        resumeCurrentScore.text = coins.ToString();<br /><br />
+
+        AudioManager.instance.inGameMusic.Stop();<br />
+        AudioManager.instance.titleScreenMusic.loop = true;<br />
+        AudioManager.instance.titleScreenMusic.Play();<br />
+    }<br /><br />
+
+    public void OnRestartButton()<br />
+    {<br />
+        AudioManager.instance.titleScreenMusic.loop = true;<br />
+        AudioManager.instance.titleScreenMusic.Play();<br /><br />
+
+        Time.timeScale = 1.0f;<br />
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);<br />
+    }<br /><br />
+
+    public void OnHelpButton()<br />
+    {<br />
+        Time.timeScale = 0.0f;<br /><br />
+
+        playPanel.SetActive(false);<br />
+        helpPanel.SetActive(true);<br />
+    }<br /><br />
+
+    public void OnBackButton()<br />
+    {<br />
+        Time.timeScale = 0.0f;<br /><br />
+
+        helpPanel.SetActive(false);<br />
+        playPanel.SetActive(true);<br />
+    }<br /><br />
+
+    public void OnCloseButton()<br />
+    {<br />
+        Application.Quit();<br />
+    }<br /><br />
+
+    public void OnBackToTitleButton()<br />
+    {<br />
+        SceneManager.LoadScene(0);<br />
+    }<br /><br />
+
+    public void OnDesertMapButton()<br />
+    {<br />
+        SceneManager.LoadScene(1);<br />
+    }<br /><br />
+
+    public void OnGrassMapButton()<br />
+    {<br />
+        SceneManager.LoadScene(2);<br />
+    }<br /><br />
+
+    public void OnGrassMapHardModeButton()<br />
+    {<br />
+        SceneManager.LoadScene(3);<br />
+    }<br /><br />
+
+    public void On2xSpeedButton()<br />
+    {<br />
+        Time.timeScale = 2.0f;<br />
+    }<br /><br />
+
+    public void On1xSpeedButton()<br />
+    {<br />
+        Time.timeScale = 1.0f;<br />
+    }<br /><br />
+
+    public void LevelWon()<br />
+    {<br />
+        PlayerPrefs.SetInt("levelReached", levelToUnlock);<br />
+    }<br /><br />
+
+    public void OnStatsReset()<br />
+    {<br />
+        PlayerPrefs.DeleteAll();<br />
+        SceneManager.GetActiveScene();<br />
+        SceneManager.LoadScene(0);<br />
+    }<br /><br />
+    
+    /*<br />
+    public void OnSkinSelect()<br />
+    {<br />
+        TankPlacement.tankPlacement.tankPrefab = TankPlacement.tankPlacement.tankPrefabSkin;<br />
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);<br />
+        Debug.Log("lol");<br />
+    }<br />
+    */<br />
+}<br />
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
