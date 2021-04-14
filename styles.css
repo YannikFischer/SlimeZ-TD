@@ -409,6 +409,19 @@
 }
 
 .code_main_container h1 {
+  background-color: #639bff;
+  background-image: linear-gradient(to top, #0027a2 0%, #3a9cff 100%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: bold;
   margin-left: 50px;
 }
 
@@ -417,6 +430,7 @@
   margin-top: 30px;
   border-left: 5px solid #0027a2;
   background-color: #8cb6ff;
+  padding-left: 10px;
 }
 
 .slimeys_main {
@@ -454,6 +468,7 @@
   background-color: #8cb6ff;
   font-size: 1.5rem;
   color: #131313;
+  padding-left: 10px;
 }
 
 .turrets_main {
@@ -491,6 +506,7 @@
   background-color: #8cb6ff;
   font-size: 1.5rem;
   color: #131313;
+  padding-left: 10px;
 }
 
 body {
