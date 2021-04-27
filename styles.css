@@ -128,7 +128,7 @@
     opacity: 1;
     transition: all 0.5s ease;
     z-index: 99;
-    height: 65vh;
+    height: 75vh;
     font-size: 1.6rem;
   }
 
@@ -758,7 +758,7 @@
 
 @media screen and (max-width: 960px) {
   .turrets_main_container p {
-    width: 130%;
+    width: 110%;
   }
 
   .turrets_main_container {
