@@ -78,7 +78,7 @@
   width: 100%;
 }
 
-.button {
+#button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,7 +93,7 @@
   color: #fff;
 }
 
-.button:hover {
+#button:hover {
   background: #194ba8;
   transition: 0.3s ease;
 }
@@ -166,7 +166,7 @@
     padding-bottom: 2rem;
   }
 
-  .button {
+  #button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -630,11 +630,13 @@
   border-left: 5px solid #0027a2;
   background-color: #8cb6ff;
   padding-left: 10px;
+  white-space: pre-wrap;
 }
 
 @media screen and (max-width: 960px) {
   .code_main_container p {
     width: 150%;
+    word-wrap: break-word;
   }
 
   .code_main_container h1 {
@@ -645,7 +647,7 @@
 
 .slimeys_main {
   background: #9badb7;
-  height: 137vh;
+  height: 138vh;
 }
 
 .slimey_main_container {
@@ -697,11 +699,16 @@
   .slimey_main_container p {
     width: 100%;
   }
+
+  .slimey_main_container {
+    margin-left: 30px;
+    margin-top: 30px;
+  }
 }
 
 .turrets_main {
   background: #9badb7;
-  height: 110vh;
+  height: 144vh;
 }
 
 .turrets_main_container {
@@ -728,7 +735,7 @@
 }
 
 .turrets_main_container p {
-  margin-left: 50px;
+  margin-left: 120px;
   margin-top: 30px;
   border-left: 5px solid #0027a2;
   background-color: #8cb6ff;
@@ -737,9 +744,26 @@
   padding-left: 10px;
 }
 
+.turrets_wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+#turretsTurret {
+  width: 100px;
+  height: 100px;
+  float: left;
+  margin-top: 40px;
+}
+
 @media screen and (max-width: 960px) {
   .turrets_main_container p {
     width: 130%;
+  }
+
+  .turrets_main_container {
+    margin-left: 30px;
+    margin-top: 30px;
   }
 }
 

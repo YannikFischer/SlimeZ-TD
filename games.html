@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SlimeZ TD Maps</title>
+    <title>Other Games</title>
     <link rel="stylesheet" href="/styles.css" />
     <link rel="shortcut icon" href="/images/SlimeZTDIcon.png" />
   </head>
   <body>
     <nav class="navbar">
       <div class="navbar_container">
-        <a href="/index.html" id="navbar_logo">SlimeZ TD</a>
+        <a href="/" id="navbar_logo">Other Games coming soon...</a>
         <div class="navbar_toggle" id="mobile-menu">
           <span class="bar"></span>
           <span class="bar"></span>
@@ -22,6 +22,9 @@
             <a href="/index.html" class="navbar_links">Home</a>
           </li>
           <li class="navbar_item">
+            <a href="/maps.html" class="navbar_links">Maps</a>
+          </li>
+          <li class="navbar_item">
             <a href="/slimeys.html" class="navbar_links">Slimeys</a>
           </li>
           <li class="navbar_item">
@@ -30,25 +33,35 @@
           <li class="navbar_item">
             <a href="/code.html" class="navbar_links">Code</a>
           </li>
-          <li class="navbar_btn">
-            <a href="/" class="button" id="button">Download</a>
+          <!--<li class="navbar_sign_in">
+            <a href="/sign_in.html" class="button">Sign In</a>
           </li>
-        </ul>
+        --></ul>
       </div>
     </nav>
-
-    <div class="maps_main">
-      <h1>The different Maps</h1>
-      <div class="maps_container">
-        <div class="maps_card">
-          <h2>The First Level</h2>
+    <div class="main">
+      <div class="main_container">
+        <div class="main_content">
+          <h1>SlimeZ TD</h1>
+          <p>SWP Project Unity Game</p>
+          <button class="main_btn">
+            <a href="SlimeZTD.zip" class="button" download="SlimeZTD">PC</a>
+          </button>
+          <button class="main_btn">
+            <a
+              href="SlimeZTDAndroid.zip"
+              class="button"
+              download="SlimeZTDAndroid"
+              >Android</a
+            >
+          </button>
+          <div class="main_img-container">
+            <img src="/images/SlimeZTDIcon.png" alt="pic" id="main_img" />
+          </div>
         </div>
-        <div class="maps_card">
-          <h2>The Second Level you Unlock</h2>
-        </div>
+        <div class="second_main_content"></div>
       </div>
     </div>
-
     <script src="script.js"></script>
   </body>
 </html>

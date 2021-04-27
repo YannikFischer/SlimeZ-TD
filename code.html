@@ -34,7 +34,7 @@
             <a href="/index.html" class="navbar_links">Home</a>
           </li>
           <li class="navbar_btn">
-            <a href="/" class="button">Download</a>
+            <a href="/" class="button" id="button">Download</a>
           </li>
         </ul>
       </div>
@@ -46,20 +46,30 @@
         <h1>HealthBar Code</h1>
         <div class="code_main_container_text">
           <p>
-            using System.Collections; <br />
-            using System.Collections.Generic; <br />using UnityEngine;
-            <br /><br />
-            public class HealthBar : MonoBehaviour { <br />
-            <br />
-            public float maxHealth = 100; <br />public float currentHealth =
-            100;<br />
-            private float originalScale; <br /><br />// Start is called before
-            the first frame update <br />void Start() {<br />
-            originalScale = gameObject.transform.localScale.x; <br />}
-            <br /><br />// Update is called once per frame <br />void Update() {
-            <br />Vector3 tmpScale = gameObject.transform.localScale;
-            <br />tmpScale.x = currentHealth / maxHealth * originalScale;
-            <br />gameObject.transform.localScale = tmpScale; <br />} <br />}
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HealthBar : MonoBehaviour
+{
+    public float maxHealth = 100;
+    public float currentHealth = 100;
+    private float originalScale;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        originalScale = gameObject.transform.localScale.x;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Vector3 tmpScale = gameObject.transform.localScale;
+        tmpScale.x = currentHealth / maxHealth * originalScale;
+        gameObject.transform.localScale = tmpScale;
+    }
+}
           </p>
         </div>
       </div>
@@ -67,86 +77,84 @@
         <h1>Slimey Code</h1>
         <div class="code_main_container_text">
           <p>
-            using System.Collections;<br />
-            using System.Collections.Generic;<br />
-            using UnityEngine;<br /><br />
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-            public class Slimey : MonoBehaviour<br />
-            {<br />
-            public GameObject[] waypoints;<br />
-            private int currentWaypoint = 0;<br />
-            private float lastWaypointSwitchTime;<br />
-            public float startSpeed = 1.0f;<br />
-            [HideInInspector]<br />
-            public float speed;<br />
-            public float slowAmount = 0.5f;<br /><br />
+public class Slimey : MonoBehaviour
+{
+    public GameObject[] waypoints;
+    private int currentWaypoint = 0;
+    private float lastWaypointSwitchTime;
+    public float startSpeed = 1.0f;
+    [HideInInspector]
+    public float speed;
+    public float slowAmount = 0.5f;
 
-            public int killWorth = 50;<br />
-            public int LifeDamage = 1;<br /><br />
+    public int killWorth = 50;
+    public int LifeDamage = 1;
 
-            public static Slimey slimey;<br /><br />
+    public static Slimey slimey;
 
-            // Start is called before the first frame update<br />
-            void Start()<br />
-            {<br />
-            speed = startSpeed;<br />
-            lastWaypointSwitchTime = Time.time; //Time = Zeit ?XD<br />
-            slimey = this;<br />
-            }<br /><br />
+    // Start is called before the first frame update
+    void Start()
+    {
+        speed = startSpeed;
+        lastWaypointSwitchTime = Time.time;     //Time = Zeit ?XD
+        slimey = this;
+    }
 
-            // Update is called once per frame<br />
-            void Update()<br />
-            {<br />
-            slimey = this;<br /><br />
+    // Update is called once per frame
+    void Update()
+    {
+        slimey = this;
 
-            //Macht dass sich der Slimey von Punkt a zu Punkt b und zu Punkt c
-            usw. bewegen kann<br />
-            Vector3 startPosition =
-            waypoints[currentWaypoint].transform.position;<br />
-            Vector3 endPosition = waypoints[currentWaypoint +
-            1].transform.position;<br /><br />
+        //Macht dass sich der Slimey von Punkt a zu Punkt b und zu Punkt c usw. bewegen kann
+        Vector3 startPosition = waypoints[currentWaypoint].transform.position;
+        Vector3 endPosition = waypoints[currentWaypoint + 1].transform.position;
 
-            float pathLength = Vector3.Distance(startPosition, endPosition);<br />
-            float totalTimeForPath = pathLength / speed;<br />
-            float currentTimeOnPath = Time.time - lastWaypointSwitchTime;<br />
-            gameObject.transform.position = Vector2.Lerp(startPosition,
-            endPosition, currentTimeOnPath / totalTimeForPath);<br /><br />
+        float pathLength = Vector3.Distance(startPosition, endPosition);
+        float totalTimeForPath = pathLength / speed;
+        float currentTimeOnPath = Time.time - lastWaypointSwitchTime;
+        gameObject.transform.position = Vector2.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
 
-            if (gameObject.transform.position.Equals(endPosition))
-            //kontrolliert ob der Slimey schon am letzten Waypoint ist<br />
-            {<br />
-            if (currentWaypoint < waypoints.Length - 2)<br />
-            {<br />
-            currentWaypoint++;<br />
-            lastWaypointSwitchTime = Time.time;<br />
-            }<br />
-            else //zerstört den Slimey und setzt die Leben auf eines weniger<br />
-            {<br />
-            CameraShake.instance.StartShake();<br />
-            Destroy(gameObject);<br />
-            GameManager.singleton.SetHealth(GameManager.singleton.GetHealth() -
-            LifeDamage);<br />
-            }<br />
-            }<br />
-            }<br /><br />
+        if (gameObject.transform.position.Equals(endPosition))      //kontrolliert ob der Slimey schon am letzten Waypoint ist
+        {
+            if (currentWaypoint < waypoints.Length - 2)
+            {
+                currentWaypoint++;
+                lastWaypointSwitchTime = Time.time;
+            }
+            else    //zerstört den Slimey und setzt die Leben auf eines weniger
+            {
+                CameraShake.instance.StartShake();
+                Destroy(gameObject);
+                GameManager.singleton.SetHealth(GameManager.singleton.GetHealth() - LifeDamage);
+            }
+        }
+    }
 
-            public float DistanceToGoal()<br />
-            {<br />
-            float distance = 0;<br />
-            distance += Vector2.Distance(gameObject.transform.position,
-            waypoints[currentWaypoint + 1].transform.position);<br />
+    public float DistanceToGoal()
+    {
+        float distance = 0;
+        distance += Vector2.Distance(gameObject.transform.position, waypoints[currentWaypoint + 1].transform.position);
 
-            for (int i = currentWaypoint + 1; i < waypoints.Length - 1; i++)<br />
-            {<br />
-            Vector3 startPosition = waypoints[i].transform.position;<br />
-            Vector3 endPosition = waypoints[i + 1].transform.position;<br />
-            distance = distance + Vector2.Distance(startPosition,
-            endPosition);<br />
-            }<br /><br />
+        for (int i = currentWaypoint + 1; i < waypoints.Length - 1; i++)
+        {
+            Vector3 startPosition = waypoints[i].transform.position;
+            Vector3 endPosition = waypoints[i + 1].transform.position;
+            distance = distance + Vector2.Distance(startPosition, endPosition);
+        }
 
-            return distance;<br />
-            }<br />
-            }<br />
+        return distance;
+    }
+
+    //fucking hell shit doesnt work pls help
+    public void Slow (float amount)
+    {
+        speed = startSpeed * (1f - amount);
+    }
+}
           </p>
         </div>
       </div>
@@ -154,29 +162,29 @@
         <h1>AudioManager Code</h1>
         <div class="code_main_container_text">
           <p>
-            using System.Collections;<br />
-            using System.Collections.Generic;<br />
-            using UnityEngine;<br /><br />
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-            public class AudioManager : MonoBehaviour<br />
-            {<br />
-            public static AudioManager instance;<br />
-            public AudioSource slimeyDestroy;<br />
-            public AudioSource inGameMusic;<br />
-            public AudioSource titleScreenMusic;<br />
-            public AudioSource gameOverMusic;<br /><br />
+public class AudioManager : MonoBehaviour
+{
+    public static AudioManager instance;
+    public AudioSource slimeyDestroy;
+    public AudioSource inGameMusic;
+    public AudioSource titleScreenMusic;
+    public AudioSource gameOverMusic;
 
-            void Awake()<br />
-            {<br />
-            instance = this;<br />
-            }<br /><br />
+    void Awake()
+    {
+        instance = this;
+    }
 
-            // Start is called before the first frame update<br />
-            void Start()<br />
-            {<br />
-            instance = this;<br />
-            }<br />
-            }<br />
+    // Start is called before the first frame update
+    void Start()
+    {
+        instance = this;
+    }
+}
           </p>
         </div>
       </div>
@@ -184,57 +192,61 @@
         <h1>CameraShake Code</h1>
         <div class="code_main_container_text">
           <p>
-            using System.Collections;<br />
-            using System.Collections.Generic;<br />
-            using UnityEngine;<br /><br />
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-            public class CameraShake : MonoBehaviour<br />
-            {<br />
-            public Transform camTransform; private float shakeDuration = 0f;
-            //Wie lange der Shake dauert<br />
-            public float shakeAmount = 0.7f; //Die Stärke des Shakes<br />
-            public float decreaseFactor = 1f; //Wie schnell der Shake wieder
-            aufhört<br />
-            public float shakeSaveDurationValue = 0.0f;<br />
-            public static CameraShake instance;<br /><br />
+public class CameraShake : MonoBehaviour
+{
+    public Transform camTransform;
+    private float shakeDuration = 0f;            //Wie lange der Shake dauert
+    public float shakeAmount = 0.7f;             //Die Stärke des Shakes
+    public float decreaseFactor = 1f;            //Wie schnell der Shake wieder aufhört
+    public float shakeSaveDurationValue = 0.0f;
+    public static CameraShake instance;
 
-            Vector3 originalPos;<br /><br />
+    Vector3 originalPos;
 
-            private void Awake()<br />
-            {<br />
-            instance = this;<br />
-            if (camTransform == null)<br />
-            {<br />
-            camTransform = GetComponent(typeof(Transform)) as Transform;<br />
-            }<br />
-            }<br />
-            private void OnEnable()<br />
-            {<br />
-            originalPos = camTransform.localPosition;<br />
-            }<br /><br />
+    private void Awake()
+    {
+        instance = this;
+        if (camTransform == null)
+        {
+            camTransform = GetComponent(typeof(Transform)) as Transform;
+        }
+    }
+    private void OnEnable()
+    {
+        originalPos = camTransform.localPosition;
+    }
 
-            public void StartShake()<br />
-            {<br />
-            shakeDuration = shakeSaveDurationValue;<br />
-            originalPos = camTransform.localPosition;<br />
-            }<br /><br />
+    public void StartShake()
+    {
+        shakeDuration = shakeSaveDurationValue;
+        originalPos = camTransform.localPosition;
+    }
 
-            // Update is called once per frame<br />
-            void Update()<br />
-            {<br />
-            if (shakeDuration > 0)<br />
-            {<br />
-            camTransform.localPosition = originalPos + Random.insideUnitSphere *
-            shakeAmount;<br />
-            shakeDuration -= Time.deltaTime * decreaseFactor;<br />
-            }<br />
-            else<br />
-            {<br />
-            shakeDuration = 0;<br />
-            camTransform.localPosition = originalPos;<br />
-            }<br />
-            }<br />
-            }<br />
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (shakeDuration > 0)
+        {
+            camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+            shakeDuration -= Time.deltaTime * decreaseFactor;
+        }
+        else
+        {
+            shakeDuration = 0;
+            camTransform.localPosition = originalPos;
+        }
+    }
+}
           </p>
         </div>
       </div>
