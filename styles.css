@@ -645,7 +645,7 @@
 
 .slimeys_main {
   background: #9badb7;
-  height: 130vh;
+  height: 137vh;
 }
 
 .slimey_main_container {
@@ -672,13 +672,25 @@
 }
 
 .slimey_main_container p {
-  margin-left: 50px;
+  margin-left: 120px;
   margin-top: 30px;
   border-left: 5px solid #0027a2;
   background-color: #8cb6ff;
   font-size: 1.5rem;
   color: #131313;
   padding-left: 10px;
+}
+
+.slimey_wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+#slimeysSlimey {
+  width: 100px;
+  height: 100px;
+  float: left;
+  margin-top: 20px;
 }
 
 @media screen and (max-width: 960px) {
