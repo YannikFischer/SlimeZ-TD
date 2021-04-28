@@ -839,11 +839,10 @@ body {
 
 .games_main_container {
   display: flex;
-  justify-content: space-around;
   text-align: center;
   width: 80%;
   height: 70vh;
-  margin-top: 100px;
+  margin-top: 150px;
 }
 
 .games_main_content {
@@ -852,6 +851,7 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  margin-left: 100px;
 }
 
 .games_main_content h1 {
@@ -874,14 +874,14 @@ body {
   cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1300px) {
   .games_main_container {
     display: grid;
     align-items: center;
     justify-self: center;
     width: 80%;
     height: 190vh;
-    margin-left: 45px;
+    margin-left: -45px;
   }
 
   .games_main_container h1 {
@@ -891,7 +891,7 @@ body {
 
   .games_main {
     flex-direction: column;
-    margin-top: 300px;
+    margin-top: 350px;
   }
 
   .games_main_content {
