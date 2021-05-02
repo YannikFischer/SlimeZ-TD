@@ -431,7 +431,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 16px;
+  margin-top: 16px;
+  margin-left: 16px;
+  margin-bottom: 16px;
   text-align: left;
   width: 160px;
   box-sizing: border-box;
@@ -555,10 +557,9 @@
 }
 
 .maps_card {
-  margin-top: 100px;
-  margin: 4rem;
   height: 400px;
   width: 690px;
+  margin: 4rem;
   display: flex;
   position: relative;
   border-radius: 0% 0% 0% 0% / 0% 0% 0% 0%;
@@ -592,7 +593,7 @@
 
 @media screen and (max-width: 960px) {
   .maps_main {
-    height: 170vh;
+    height: 150vh;
   }
 
   .maps_main h1 {
@@ -675,7 +676,7 @@
 
 .slimeys_main {
   background: #9badb7;
-  height: 138vh;
+  height: 103vh;
 }
 
 .slimey_main_container {
@@ -732,7 +733,7 @@
 
 @media screen and (max-width: 960px) {
   .slimeys_main {
-    height: 193vh;
+    height: 170vh;
   }
 
   .slimey_main_container p {
@@ -747,7 +748,7 @@
 
 .turrets_main {
   background: #9badb7;
-  height: 144vh;
+  height: 106vh;
 }
 
 .turrets_main_container {
@@ -804,7 +805,7 @@
 
 @media screen and (max-width: 960px) {
   .turrets_main {
-    height: 205vh;
+    height: 180vh;
   }
 
   .turrets_main_container p {
@@ -946,5 +947,9 @@ body {
 
   .games_main_content {
     margin-top: -100px;
+  }
+
+  #games_main_img {
+    margin-top: 20px;
   }
 }
