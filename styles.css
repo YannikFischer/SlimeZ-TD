@@ -819,7 +819,7 @@
 }
 
 body {
-  background: #9badb7; /*hier problem so*/
+  background: #9badb7;
 }
 
 .sign_in {
@@ -923,6 +923,28 @@ body {
   font-weight: 700;
   color: #fff;
   cursor: pointer;
+}
+
+#games_main_img {
+  -webkit-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+}
+
+#games_main_img:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+#games_main_img_Dragon {
+  width: 33%;
+  height: 33%;
+  -webkit-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+}
+
+#games_main_img_Dragon:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 @media screen and (max-width: 1300px) {
