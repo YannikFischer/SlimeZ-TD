@@ -947,6 +947,18 @@ body {
   transform: scale(1.1);
 }
 
+#games_main_img_lol {
+  width: 33%;
+  height: 33%;
+  -webkit-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+}
+
+#games_main_img_lol:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
 @media screen and (max-width: 1300px) {
   .games_main_container {
     display: grid;
@@ -972,6 +984,15 @@ body {
   }
 
   #games_main_img {
+    margin-top: 20px;
+  }
+
+  #games_main_img_Dragon {
+    width: 50%;
+  }
+
+  #games_main_img_lol {
+    width: 50%;
     margin-top: 20px;
   }
 }
