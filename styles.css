@@ -936,8 +936,8 @@ body {
 }
 
 #games_main_img_Dragon {
-  width: 33%;
-  height: 33%;
+  width: 10rem;
+  height: 10rem;
   -webkit-transition: 0.25s ease-in-out;
   transition: 0.25s ease-in-out;
 }
@@ -948,8 +948,8 @@ body {
 }
 
 #games_main_img_lol {
-  width: 33%;
-  height: 33%;
+  width: 10rem;
+  height: 10rem;
   -webkit-transition: 0.25s ease-in-out;
   transition: 0.25s ease-in-out;
 }
@@ -988,11 +988,11 @@ body {
   }
 
   #games_main_img_Dragon {
-    width: 50%;
+    width: 10rem;
   }
 
   #games_main_img_lol {
-    width: 50%;
+    width: 10rem;
     margin-top: 20px;
   }
 }
